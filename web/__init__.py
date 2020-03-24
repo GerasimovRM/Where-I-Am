@@ -10,7 +10,7 @@ def create_app(config_file='settings.py'):
     app = Flask(__name__)
 
     app.config.from_pyfile(config_file)
-    db_file = 'db/' + app.config['SQLALCHEMY_DATABASE_URI']
+    db_file = 'db/wia_db.db'
     db_session.global_init(db_file)
     login_manager.init_app(app)
 

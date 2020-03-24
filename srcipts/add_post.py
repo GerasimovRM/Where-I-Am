@@ -1,5 +1,5 @@
-from web.models import db_session
-from web.models.post import Post
+from models import db_session
+from models.post import Post
 
 if __name__ == '__main__':
     db_session.global_init('../web/db/wia_db.db')

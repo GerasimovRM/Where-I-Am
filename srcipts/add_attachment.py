@@ -1,5 +1,5 @@
-from web.models import db_session
-from web.models.attachment import Attachment
+from models import db_session
+from models.attachment import Attachment
 
 if __name__ == '__main__':
     db_session.global_init('../web/db/wia_db.db')

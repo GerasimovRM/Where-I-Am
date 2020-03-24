@@ -1,20 +1,19 @@
 from flask_login import UserMixin
 import sqlalchemy as sa
-from sqlalchemy.orm import relation, mapper
+from sqlalchemy.orm import relation
+from sqlalchemy_serializer import SerializerMixin
 from werkzeug.security import generate_password_hash
 import datetime
 
 from .db_session import SqlAlchemyBase
 
 
+friends_relation = sa.Table('friends', SqlAlchemyBase.metadata,
+                            sa.Column('user_id_1', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
+                            sa.Column('user_id_2', sa.Integer, sa.ForeignKey('user.id'), primary_key=True))
 
 
-friends_table = sa.Table('friends', SqlAlchemyBase.metadata,
-                         sa.Column('user_id_1', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
-                         sa.Column('user_id_2', sa.Integer, sa.ForeignKey('user.id'), primary_key=True))
-
-
-class User(SqlAlchemyBase, UserMixin):
+class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'user'
 
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
@@ -30,8 +29,10 @@ class User(SqlAlchemyBase, UserMixin):
     posts = relation('Post', back_populates='user')
 
 
-    friend_ids = relation("User",
-                          secondary=friends_table)
+    friends = relation('User', secondary=friends_relation,
+                          primaryjoin=friends_relation.c.user_id_1==id,
+                          secondaryjoin=friends_relation.c.user_id_2==id,
+                          backref="back_friends")
 
 
     @property
@@ -41,3 +42,13 @@ class User(SqlAlchemyBase, UserMixin):
     @unhashed_password.setter
     def unhashed_password(self, unhashed_password):
         self.password = generate_password_hash(unhashed_password)
+
+    def __repr__(self):
+        return '\n'.join(map(str, [self.id,
+                                   self.nickname,
+                                   self.first_name,
+                                   self.middle_name,
+                                   self.last_name,
+                                   self.email,
+                                   self.registration_date,
+                                   self.posts]))

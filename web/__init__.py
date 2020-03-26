@@ -10,7 +10,7 @@ def create_app(config_file='settings.py'):
     app = Flask(__name__)
 
     app.config.from_pyfile(config_file)
-    db_file = 'db/' + app.config['SQLALCHEMY_DATABASE_URI']
+    db_file = app.config['SQLALCHEMY_DATABASE_URI']
     db_session.global_init(db_file)
     login_manager.init_app(app)
 
@@ -23,6 +23,6 @@ def create_app(config_file='settings.py'):
 
     @app.errorhandler(404)
     def not_found(error):
-        return make_response(jsonify({'message': 'not found'}), 404)
+        return make_response(jsonify({'error': 'Not found'}), 404)
 
     return app

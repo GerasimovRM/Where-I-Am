@@ -1,3 +1,6 @@
 from requests import get
+from pprint import pprint
 
-print(get('http://localhost:5000/api/v1/user/1').json())
+pprint(get('http://localhost:5000/api/v1/user/-10').json())
+pprint(get('http://localhost:5000/api/v1/user/2').json())
+pprint(get('http://localhost:5000/api/v1/user').json())

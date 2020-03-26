@@ -1,2 +1,1 @@
-web: gunicorn wsgi:app
-heroku config --app wsgi
+web: gunicorn app:app

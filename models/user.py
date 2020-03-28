@@ -5,7 +5,7 @@ from sqlalchemy_serializer import SerializerMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 
-from .db_session import SqlAlchemyBase
+from .db_session import SqlAlchemyBase, create_session
 
 
 friends_relation = sa.Table('friends', SqlAlchemyBase.metadata,
@@ -44,6 +44,17 @@ class User(SqlAlchemyBase, SerializerMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    # to_dict из SerializerMixin не работает, так как ругается на рекурсию, связанную со связью user <MTM>
+    def to_dict(self, **kwargs):
+        answer = {}
+        friends = list(map(lambda u: u.id, self.friends))
+        back_friends = list(map(lambda u: u.id, self.back_friends))
+        user = super().to_dict(only=['id', 'nickname', 'last_name', 'first_name', 'middle_name'], **kwargs)
+        answer.update(user)
+        answer['friends'] = friends
+        answer['back_friends'] = back_friends
+        return answer
 
     def __repr__(self):
         return '\n'.join(map(str, [self.id,

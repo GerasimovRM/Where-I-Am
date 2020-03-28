@@ -9,10 +9,12 @@ class Post(SqlAlchemyBase):
     __tablename__ = 'post'
 
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-    user_id = sa.Column(sa.Integer, sa.ForeignKey('user.id'), unique=True, nullable=False)
+    only_friends = sa.Column(sa.Boolean, default=False)
+    user_id = sa.Column(sa.Integer, sa.ForeignKey('user.id'), nullable=False)
     title = sa.Column(sa.String, nullable=False)
     description = sa.Column(sa.String, nullable=True)
     post_date = sa.Column(sa.DateTime, default=datetime.datetime.now)
+
 
     user = relation('User', back_populates='posts')
     attachments = relation('Attachment', back_populates='post')

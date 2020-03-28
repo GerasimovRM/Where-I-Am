@@ -1,9 +1,11 @@
 import sqlalchemy as sa
 from sqlalchemy.orm import relation
+from sqlalchemy_serializer import SerializerMixin
+
 from .db_session import SqlAlchemyBase
 
 
-class Admin(SqlAlchemyBase):
+class Admin(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'admin'
 
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)

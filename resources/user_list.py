@@ -1,29 +1,27 @@
-from flask import jsonify, make_response, current_app
-from flask_restful import reqparse, abort, Api, Resource
-from sqlalchemy import exc
+from flask import jsonify, make_response
+from flask_restful import Resource
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from models import db_session
 from models.user import User
+from models.admin import Admin
 
 from sqlalchemy.exc import SQLAlchemyError
 
+from .virtual import VirtualUser
 
-"""
-TODO: NOT USE NOW!!
-"""
-class UserListResource(Resource):
-    def __init__(self):
-        self.parser = reqparse.RequestParser()
-        self.parser.add_argument('nickname', required=True)
-        self.parser.add_argument('first_name', required=True)
-        self.parser.add_argument('middle_name')
-        self.parser.add_argument('last_name', required=True)
-        self.parser.add_argument('email', required=True)
-        self.parser.add_argument('unhashed_password', required=True)
-        self.parser.add_argument('registration_date')
 
+class UserListResource(VirtualUser, Resource):
+    @jwt_required
     def get(self):
+        """
+        Only for admins: Show all users
+        """
+        current_user_id = get_jwt_identity()
         session = db_session.create_session()
+        admin = session.query(Admin).filter(Admin.user_id==current_user_id).first()
+        if not admin:
+            return make_response(jsonify(error='Access denied: You are not admin'), 401)
         answer = []
         for user in session.query(User).all():
             friends = list(map(lambda u: u.id, user.friends))
@@ -33,8 +31,17 @@ class UserListResource(Resource):
             answer[-1]['back_friends'] = back_friends
         return jsonify(users=answer)
 
+    @jwt_required
     def post(self):
+        """
+        Only for admins: Add user
+        """
+
+        current_user_id = get_jwt_identity()
         session = db_session.create_session()
+        admin = session.query(Admin).filter(Admin.user_id == current_user_id).first()
+        if not admin:
+            return make_response(jsonify(error='Access denied: You are not admin'), 401)
         args = self.parser.parse_args()
         try:
             user = User(**args)
@@ -42,7 +49,5 @@ class UserListResource(Resource):
             session.commit()
             return jsonify({'success': 'OK'})
         except SQLAlchemyError as ex:
-            current_app.logger.error(ex)
             session.rollback()
-            return make_response(jsonify({"error": ex.args[0]}), 400)
-
+            return make_response(jsonify({"error": ex.args}), 400)

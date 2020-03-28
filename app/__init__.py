@@ -1,9 +1,12 @@
 from flask import Flask, make_response, jsonify
+from flask_jwt_extended import JWTManager
 
 from .extensions import login_manager
 
 from models import db_session
 from models.user import User
+
+
 
 
 def create_app(config_file='settings.py'):
@@ -17,6 +20,8 @@ def create_app(config_file='settings.py'):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
+
+    jwt = JWTManager(app)
 
     from routes import api_v1
     app.register_blueprint(api_v1, url_prefix='/api/v1')

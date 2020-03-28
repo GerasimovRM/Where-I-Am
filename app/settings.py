@@ -2,6 +2,7 @@ import os
 
 
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-print(os.environ.get('DATABASE_URL'))
-SECRET_KEY = os.environ.get('SECRET_KEY')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+JWT_SECRET_KEY= os.environ.get('JWT_SECRET_KEY')

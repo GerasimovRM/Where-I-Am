@@ -2,7 +2,7 @@ from models import db_session
 from models.post import Post
 
 if __name__ == '__main__':
-    db_session.global_init('../web/db/wia_db.db')
+    db_session.global_init('sqlite:///../../db/wia_db.db')
 
 post = Post(
     user_id=1,

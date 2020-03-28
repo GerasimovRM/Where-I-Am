@@ -29,8 +29,8 @@ class SigninResource(Resource):
 
         exp_access = datetime.timedelta(days=1)
         exp_refresh = datetime.timedelta(hours=1)
-        access_token = create_access_token(identity=str(user.id), expires_delta=exp_access)
-        refresh_token = create_refresh_token(identity=str(user.id), expires_delta=exp_refresh)
+        access_token = create_access_token(identity=user.id, expires_delta=exp_access)
+        refresh_token = create_refresh_token(identity=user.id, expires_delta=exp_refresh)
         return jsonify(access_token=access_token, refresh_token=refresh_token)
 
 

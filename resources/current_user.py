@@ -15,11 +15,7 @@ class CurrentUserResource(VirtualUser, Resource):
         Get yourself data user
         """
         user_id = get_jwt_identity()
-        db_context = db_session.create_session()
-        user = db_context.query(User).get(user_id)
-        friends = list(map(lambda u: u.id, user.friends))
-        back_friends = list(map(lambda u: u.id, user.back_friends))
-        answer = user.to_dict(only=['id', 'nickname', 'last_name', 'first_name', 'middle_name'])
-        return jsonify(**answer, friends=friends, back_friends=back_friends)
+        session = db_session.create_session()
+        return jsonify(current_user=session.query(User).get(user_id).to_dict())
 
     # TODO: put

@@ -4,3 +4,4 @@ from .current_user import CurrentUserResource
 from .signup import SignupResource
 from .user_list import UserListResource
 from .user import UserResource
+from .admin_list import AdminListResource

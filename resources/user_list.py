@@ -22,21 +22,13 @@ class UserListResource(VirtualUser, Resource):
         admin = session.query(Admin).filter(Admin.user_id==current_user_id).first()
         if not admin:
             return make_response(jsonify(error='Access denied: You are not admin'), 401)
-        answer = []
-        for user in session.query(User).all():
-            friends = list(map(lambda u: u.id, user.friends))
-            back_friends = list(map(lambda u: u.id, user.back_friends))
-            answer.append(user.to_dict(only=['id', 'nickname', 'last_name', 'first_name', 'middle_name']))
-            answer[-1]['friends'] = friends
-            answer[-1]['back_friends'] = back_friends
-        return jsonify(users=answer)
+        return jsonify(users=[user.to_dict() for user in session.query(User).all()])
 
     @jwt_required
     def post(self):
         """
         Only for admins: Add user
         """
-
         current_user_id = get_jwt_identity()
         session = db_session.create_session()
         admin = session.query(Admin).filter(Admin.user_id == current_user_id).first()

@@ -1,7 +1,7 @@
 from requests import post
 
-from srcipts.requests.common import URL
+from .common import URL
 
 
-print(post(f'{URL}/signin', json={'nickname': 'Имя1123',
+print(post(f'{URL}/signin', json={'nickname': 'Roman',
                                   'unhashed_password': 'сильныйпароль'}).json())

@@ -1,10 +1,19 @@
 from requests import post
 
-from srcipts.requests.common import URL
+from .common import URL
 
 
-print(post(f'{URL}/signup', json={'nickname': 'Имя1123',
-                                'first_name': 'Тоже имя',
-                                'last_name': 'Не имя',
-                                'email': 'my_emai2332l@k.k',
+print(post(f'{URL}/signup', json={'nickname': 'Roman',
+                                'first_name': 'Роман',
+                                'last_name': 'Герасимов',
+                                'email': 'romagrizly@gmail.com',
                                 'unhashed_password': 'сильныйпароль'}).json())
+
+
+print(post(f'{URL}/signup', json={'nickname': 'test',
+                                'first_name': 'test',
+                                'last_name': 'test',
+                                'email': 'test@gmail.com',
+                                'unhashed_password': 'сильныйпароль'}).json())
+
+

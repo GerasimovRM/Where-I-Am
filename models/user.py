@@ -10,7 +10,8 @@ from .db_session import SqlAlchemyBase, create_session
 
 friends_relation = sa.Table('friends', SqlAlchemyBase.metadata,
                             sa.Column('user_id_1', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
-                            sa.Column('user_id_2', sa.Integer, sa.ForeignKey('user.id'), primary_key=True))
+                            sa.Column('user_id_2', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
+                            sa.Column('status', sa.Boolean, default=0))
 
 
 class User(SqlAlchemyBase, SerializerMixin):

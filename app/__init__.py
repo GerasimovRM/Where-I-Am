@@ -7,8 +7,6 @@ from models import db_session
 from models.user import User
 
 
-
-
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
 
@@ -28,6 +26,6 @@ def create_app(config_file='settings.py'):
 
     @app.errorhandler(404)
     def not_found(error):
-        return make_response(jsonify({'error': 'Not found'}), 404)
+        return make_response(jsonify({'error': 'Request not found'}), 404)
 
     return app

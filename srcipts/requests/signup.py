@@ -22,10 +22,10 @@ print(post(f'{URL}/signup', json={'nickname': 'Fedor',
                                 'email': 'test123fed@gmail.com',
                                 'unhashed_password': '123'}).json())
 
-print(post(f'{URL}/signup', json={'nickname': 'Fedordel',
-                                'first_name': 'Федя',
-                                'last_name': 'Федосов',
-                                'email': 'test123delfed@gmail.com',
+print(post(f'{URL}/signup', json={'nickname': 'Jora',
+                                'first_name': 'Жора',
+                                'last_name': 'Жоров',
+                                'email': 'jora@gmail.com',
                                 'unhashed_password': '123'}).json())
 
 

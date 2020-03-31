@@ -1,6 +1,6 @@
 from requests import post
 
-from .common import URL
+from srcipts.requests.common import URL
 
 
 print(post(f'{URL}/signup', json={'nickname': 'Roman',

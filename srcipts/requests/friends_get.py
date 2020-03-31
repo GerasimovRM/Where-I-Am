@@ -8,6 +8,4 @@ tokens = post(f'{URL}/signin', json={'nickname': 'Fedor',
 pprint(tokens)
 headers = {'Authorization': f'Bearer {tokens["access_token"]}'}
 
-pprint(get(f'{URL}/user/100', headers=headers).json())
-pprint(get(f'{URL}/user/1', headers=headers).json())
-pprint(get(f'{URL}/users', headers=headers).json())
+pprint(get(f'{URL}/friends', headers=headers).json())

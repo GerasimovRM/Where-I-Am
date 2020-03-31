@@ -2,7 +2,8 @@ from flask import Blueprint
 from flask_restful import Api
 
 from resources import CurrentUserResource, UserListResource, Shutdown, SignupResource, SigninResource
-from resources import UserResource, AdminListResource
+from resources import UserResource, AdminListResource, FriendsListResource, FriendsRequestsResource
+from resources import AddFriendResource
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -17,4 +18,8 @@ api.add_resource(SignupResource, '/signup')
 api.add_resource(SigninResource, '/signin')
 
 api.add_resource(AdminListResource, '/admins')
+
+api.add_resource(AddFriendResource, '/friend_add/<int:friend_id>')
+api.add_resource(FriendsListResource, '/friends')
+api.add_resource(FriendsRequestsResource, '/friends_check')
 

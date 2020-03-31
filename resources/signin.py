@@ -7,8 +7,6 @@ import datetime
 from models import db_session
 from models.user import User
 
-from .virtual import VirtualUser
-
 
 class SigninResource(Resource):
     def post(self):
@@ -28,7 +26,7 @@ class SigninResource(Resource):
 
 
         exp_access = datetime.timedelta(days=1)
-        exp_refresh = datetime.timedelta(hours=1)
+        exp_refresh = datetime.timedelta(seconds=15)
         access_token = create_access_token(identity=user.id, expires_delta=exp_access)
         refresh_token = create_refresh_token(identity=user.id, expires_delta=exp_refresh)
         return jsonify(access_token=access_token, refresh_token=refresh_token)

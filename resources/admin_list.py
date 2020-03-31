@@ -3,11 +3,7 @@ from flask_restful import Resource
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from models import db_session
-from models.user import User
 from models.admin import Admin
-from models.super_admin import SuperAdmin
-
-from .virtual import VirtualUser
 
 
 class AdminListResource(Resource):
@@ -23,8 +19,7 @@ class AdminListResource(Resource):
             return make_response(jsonify(error='Access denied: You are not admin'), 401)
 
         admins = session.query(Admin).all()
-        return jsonify(admins=admins[0].user.to_dict())
-
+        return jsonify(admins=[admin.user.to_dict() for admin in admins])
 
     def post(self):
         """

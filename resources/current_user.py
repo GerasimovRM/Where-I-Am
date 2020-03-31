@@ -1,14 +1,12 @@
-from flask import jsonify, session
+from flask import jsonify
 from flask_restful import Resource
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from models import db_session
 from models.user import User
 
-from .virtual import VirtualUser
 
-
-class CurrentUserResource(VirtualUser, Resource):
+class CurrentUserResource(Resource):
     @jwt_required
     def get(self):
         """

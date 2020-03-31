@@ -5,3 +5,6 @@ from .signup import SignupResource
 from .user_list import UserListResource
 from .user import UserResource
 from .admin_list import AdminListResource
+from .friends_list import FriendsListResource
+from .friends_requests import FriendsRequestsResource
+from .add_friend import AddFriendResource

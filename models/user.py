@@ -26,7 +26,6 @@ class User(SqlAlchemyBase, SerializerMixin):
     registration_date = sa.Column(sa.DateTime, default=datetime.datetime.now)
 
     admin = relation('Admin', back_populates='user')
-    posts = relation('Post', back_populates='user')
 
     # Дружественность в одну сторону! Вот такие вот друзья в наше время..
     friends = relation('User', secondary=friends_relation,

@@ -10,8 +10,7 @@ from .db_session import SqlAlchemyBase, create_session
 
 friends_relation = sa.Table('friends', SqlAlchemyBase.metadata,
                             sa.Column('user_id_1', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
-                            sa.Column('user_id_2', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
-                            sa.Column('status', sa.Boolean, default=0))
+                            sa.Column('user_id_2', sa.Integer, sa.ForeignKey('user.id'), primary_key=True))
 
 
 class User(SqlAlchemyBase, SerializerMixin):
@@ -66,3 +65,6 @@ class User(SqlAlchemyBase, SerializerMixin):
                                    self.email,
                                    self.registration_date,
                                    self.posts]))
+
+    def __eq__(self, other):
+        return self.id == other.id

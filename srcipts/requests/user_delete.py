@@ -1,4 +1,4 @@
-from requests import get, post
+from requests import get, post, delete
 from pprint import pprint
 
 from srcipts.requests.common import URL
@@ -8,6 +8,4 @@ tokens = post(f'{URL}/signin', json={'nickname': 'Roman',
 pprint(tokens)
 headers = {'Authorization': f'Bearer {tokens["access_token"]}'}
 
-pprint(get(f'{URL}/user/100', headers=headers).json())
-pprint(get(f'{URL}/user/1', headers=headers).json())
-pprint(get(f'{URL}/users', headers=headers).json())
+pprint(delete(f'{URL}/user/4', headers=headers).json())

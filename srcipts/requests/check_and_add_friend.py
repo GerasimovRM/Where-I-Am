@@ -12,3 +12,13 @@ pprint(get(f'{URL}/friends_check', headers=headers).json())
 
 pprint(post(f'{URL}/friend_add/2', headers=headers).json())
 pprint(post(f'{URL}/friend_add/3', headers=headers).json())
+
+
+tokens = post(f'{URL}/signin', json={'nickname': 'Fedor',
+                                     'unhashed_password': '123'}).json()
+pprint(tokens)
+headers = {'Authorization': f'Bearer {tokens["access_token"]}'}
+
+pprint(get(f'{URL}/friends', headers=headers).json())
+pprint(post(f'{URL}/friend_add/2', headers=headers).json())
+pprint(post(f'{URL}/friend_add/2', headers=headers).json())

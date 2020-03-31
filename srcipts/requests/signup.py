@@ -16,4 +16,16 @@ print(post(f'{URL}/signup', json={'nickname': 'test',
                                 'email': 'test@gmail.com',
                                 'unhashed_password': 'сильныйпароль'}).json())
 
+print(post(f'{URL}/signup', json={'nickname': 'Fedor',
+                                'first_name': 'Федя',
+                                'last_name': 'Федосов',
+                                'email': 'test123fed@gmail.com',
+                                'unhashed_password': '123'}).json())
+
+print(post(f'{URL}/signup', json={'nickname': 'Fedordel',
+                                'first_name': 'Федя',
+                                'last_name': 'Федосов',
+                                'email': 'test123delfed@gmail.com',
+                                'unhashed_password': '123'}).json())
+
 

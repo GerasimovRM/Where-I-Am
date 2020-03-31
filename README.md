@@ -5,6 +5,7 @@
 ## JWT-токен
 
 Для авторизации пользователя необходимо сохранить jwt access token в хедеры запроса:
+
 'Authorization': 'Bearer <jwt_access_token>' 
 
 ## Развертка приложения
